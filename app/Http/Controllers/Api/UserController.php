@@ -10,6 +10,14 @@ class UserController extends Controller
 {
     public function index(): JsonResponse
     {
-        return response()->json(User::all());
+        $users = User::all();
+        foreach ($users as $user) {
+            $user->unreadMessages = $user->messages->where('read', false)
+                ->whereNull('channel_id')
+                ->where('receiver_id', Auth()->id())
+                ->count();
+        }
+
+        return response()->json($users);
     }
 }

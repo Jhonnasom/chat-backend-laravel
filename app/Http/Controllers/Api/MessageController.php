@@ -51,4 +51,15 @@ class MessageController extends Controller
 
         return response()->json($message);
     }
+
+    public function messageRead($sender_id): JsonResponse
+    {
+        Auth()->user()->messages_received()
+            ->whereNull('channel_id')
+            ->where('sender_id', $sender_id)
+            ->where('read', false)
+            ->update(['read' => true]);
+
+        return response()->json();
+    }
 }

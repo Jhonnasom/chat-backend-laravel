@@ -13,7 +13,13 @@ class ChannelController extends Controller
      */
     public function index()
     {
-        return response()->json(Channel::all());
+        $channels = Channel::all();
+        foreach ($channels as $channel) {
+            $channel->unreadMessages = $channel->messages->where('read', false)
+                ->where('receiver_id', Auth()->id())
+                ->count();
+        }
+        return response()->json($channels);
     }
 
     /**

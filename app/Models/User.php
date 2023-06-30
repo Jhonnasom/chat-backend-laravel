@@ -48,4 +48,8 @@ class User extends Authenticatable
     {
         return $this->hasMany(Message::class, 'sender_id');
     }
+    public function channels(): HasMany
+    {
+        return $this->hasMany(Channel::class, 'channel_id');
+    }
 }

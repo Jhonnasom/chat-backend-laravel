@@ -11,15 +11,18 @@ use Illuminate\Queue\SerializesModels;
 class MessageCreated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-
-    public function __construct(public Message $message)
+    public $receiver_id;
+    public $type;
+    public function __construct(public Message $message, $type = 'user')
     {
+        $this->receiver_id = $message->receiver_id;
+        $this->type = $type;
     }
 
     public function broadcastOn(): array
     {
         return [
-            'messages',
+            'messages.'.$this->type.'.'.$this->receiver_id,
         ];
     }
 }

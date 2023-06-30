@@ -18,13 +18,15 @@ class MessageController extends Controller
     {
         $messages = Message::query()
             ->with('receiver', 'sender')
-            ->where(function (Builder $builder) use ($receiver) {
-                $builder->where('receiver_id', $receiver)
-                    ->where('sender_id', Auth::id());
-            })
-            ->orWhere(function (Builder $builder) use ($receiver) {
-                $builder->where('receiver_id', Auth::id())
-                    ->where('sender_id', $receiver);
+            ->whereNull('channel_id')
+            ->where(function($query) use ($receiver) {
+                $query->where(function (Builder $builder) use ($receiver) {
+                    $builder->where('receiver_id', $receiver)
+                        ->where('sender_id', Auth::id());
+                })->orWhere(function (Builder $builder) use ($receiver) {
+                    $builder->where('receiver_id', Auth::id())
+                        ->where('sender_id', $receiver);
+                });
             })
             ->orderBy('created_at')
             ->get();

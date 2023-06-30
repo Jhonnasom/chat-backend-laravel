@@ -13,9 +13,9 @@ return new class extends Migration
 
             $table->foreignId('receiver_id')->constrained('users');
             $table->foreignId('sender_id')->constrained('users');
-            $table->foreignId('channel_id')->constrained('channels');
+            $table->foreignId('channel_id')->nullable()->constrained('channels');
             $table->text('message');
-            $table->binary('read')->default(null);
+            $table->binary('read')->default(0);
             $table->timestamps();
         });
     }

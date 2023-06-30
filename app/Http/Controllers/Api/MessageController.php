@@ -47,7 +47,7 @@ class MessageController extends Controller
             'message' => $data['message'],
         ]);
 
-        broadcast(new MessageCreated($message))->toOthers();
+        broadcast(new MessageCreated($message, 'user'))->toOthers();
 
         return response()->json($message);
     }

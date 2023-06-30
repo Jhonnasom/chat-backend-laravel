@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthenticatedUserController;
 use App\Http\Controllers\Api\ChannelController;
+use App\Http\Controllers\Api\ChannelMessageController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -15,4 +16,5 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('messages', [MessageController::class, 'store']);
     Route::get('users', [UserController::class, 'index']);
     Route::get('channels', [ChannelController::class, 'index']);
+    Route::apiResource('channels/{id}/messages', ChannelMessageController::class)->only(['index', 'store']);
 });

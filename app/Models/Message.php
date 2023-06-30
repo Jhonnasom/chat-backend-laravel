@@ -9,6 +9,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Message extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'message',
+        'receiver_id',
+        'sender_id',
+        'channel_id',
+    ];
 
     public function receiver(): BelongsTo
     {
@@ -18,5 +24,10 @@ class Message extends Model
     public function sender(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function channel(): BelongsTo
+    {
+        return $this->belongsTo(Channel::class);
     }
 }

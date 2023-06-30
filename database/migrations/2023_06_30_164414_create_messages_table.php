@@ -16,6 +16,8 @@ return new class extends Migration
             $table->foreignId('channel_id')->nullable()->constrained('channels');
             $table->text('message');
             $table->binary('read')->default(0);
+            $table->text('uuid')->nullable();
+            $table->binary('first')->default(0);
             $table->timestamps();
         });
     }

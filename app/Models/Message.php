@@ -14,6 +14,8 @@ class Message extends Model
         'receiver_id',
         'sender_id',
         'channel_id',
+        'uuid',
+        'first'
     ];
 
     public function receiver(): BelongsTo
